@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { MapPin, Phone, Star, Facebook, Instagram, Clock, CheckCircle2, Menu as MenuIcon, X } from 'lucide-react';
+import { MapPin, Phone, Star, Facebook, Instagram, Clock, CheckCircle2, Menu as MenuIcon, X, ShoppingCart, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 // Using high-quality Unsplash placeholders since image generation quota is reached
@@ -130,32 +130,68 @@ export default function App() {
       <OrderModal isOpen={showOrderModal} onClose={() => setShowOrderModal(false)} />
 
       {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 border-b ${isScrolled ? 'bg-white shadow-md border-gray-100 py-3' : 'bg-white/95 backdrop-blur-md border-transparent py-4'}`}>
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md border-b border-gray-100 py-2' : 'bg-[#faf8f5] shadow-sm border-b border-gray-100 py-3'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo(0,0)}>
-              <img src={LOGO_URL} alt="MNH Logo" className="w-14 h-14 object-contain shrink-0" onError={(e) => { e.currentTarget.style.display='none'; }} />
-              <div className="flex flex-col">
-                <h1 className="font-serif font-bold text-lg sm:text-xl leading-tight text-brand-blue tracking-tight">Muhammadi</h1>
-                <p className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-brand-red -mt-1">Nehari House</p>
+          <div className="flex justify-between items-center relative h-14">
+            
+            {/* Left Actions & Mobile Logo */}
+            <div className="flex items-center gap-3">
+              {/* Desktop Left Actions */}
+              <div className="hidden lg:flex items-center gap-3">
+                <button 
+                  onClick={() => setShowOrderModal(true)}
+                  className="flex items-center gap-2 bg-brand-red text-white px-4 py-2 rounded-lg font-bold hover:bg-red-700 transition shadow-sm"
+                >
+                  <MapPin size={18} className="fill-white" />
+                  <div className="text-left leading-tight">
+                    <span className="block text-xs font-bold tracking-wider">Change Branch</span>
+                    <span className="block text-[11px] font-medium opacity-90">Bahria Town</span>
+                  </div>
+                </button>
+                
+                <a 
+                  href="tel:03009005929"
+                  className="flex items-center gap-2 bg-brand-red text-white px-5 py-2.5 rounded-lg font-bold hover:bg-red-700 transition shadow-sm"
+                >
+                  <Phone size={18} className="fill-white" />
+                  <span className="text-base tracking-wide">0300 9005929</span>
+                </a>
+              </div>
+
+              {/* Mobile Logo */}
+              <div className="lg:hidden flex flex-col cursor-pointer text-left" onClick={() => window.scrollTo(0,0)}>
+                <h1 className="font-serif font-bold text-xl leading-tight text-brand-blue tracking-tight">Muhammadi</h1>
+                <p className="text-[10px] uppercase font-bold tracking-widest text-brand-red mt-0.5">Nehari House</p>
               </div>
             </div>
 
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#about" className="text-sm font-medium hover:text-brand-red transition-colors">About</a>
-              <a href="#menu" className="text-sm font-medium hover:text-brand-red transition-colors">Menu</a>
-              <a href="#gallery" className="text-sm font-medium hover:text-brand-red transition-colors">Gallery</a>
-              <a href="#contact" className="text-sm font-medium hover:text-brand-red transition-colors">Contact</a>
-              <button onClick={() => setShowOrderModal(true)} className="inline-flex items-center justify-center rounded-full bg-brand-red px-6 py-2.5 text-sm font-medium text-white shadow-lg shadow-brand-red/30 hover:bg-red-700 transition-all active:scale-95">
-                Order Online
-              </button>
+            {/* Logo Center Text (Desktop Only) */}
+            <div className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
+              <div className="flex flex-col items-center justify-center cursor-pointer text-center" onClick={() => window.scrollTo(0,0)}>
+                <h1 className="font-serif font-bold text-2xl leading-tight text-brand-blue tracking-tight">Muhammadi</h1>
+                <p className="text-[11px] uppercase font-bold tracking-widest text-brand-red mt-0.5">Nehari House</p>
+              </div>
             </div>
 
-            {/* Mobile Menu Toggle */}
-            <button className="md:hidden p-2 -mr-2 text-slate-600" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              {mobileMenuOpen ? <X size={24} /> : <MenuIcon size={24} />}
-            </button>
+            {/* Right Actions */}
+            <div className="flex items-center gap-3 lg:gap-4 shrink-0 z-10">
+               <button className="hidden md:flex border border-brand-red text-brand-red items-center gap-2 px-4 py-2 rounded-lg font-medium hover:bg-red-50 transition">
+                  Sign in / Register
+                  <User size={18} className="fill-current" />
+               </button>
+               
+               <div className="hidden sm:block w-px h-6 bg-slate-300"></div>
+
+               <button className="relative p-1 text-brand-red hover:text-red-700 transition">
+                  <ShoppingCart size={28} className="fill-current" />
+                  <span className="absolute top-0 right-0 w-5 h-5 bg-brand-red text-white text-xs font-bold flex items-center justify-center rounded-full border-2 border-white translate-x-2 -translate-y-1">0</span>
+               </button>
+
+               <button className="bg-brand-red text-white p-2 rounded-lg hover:bg-red-700 transition shadow-sm" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                  {mobileMenuOpen ? <X size={24} /> : <MenuIcon size={24} />}
+               </button>
+            </div>
+
           </div>
         </div>
       </nav>
